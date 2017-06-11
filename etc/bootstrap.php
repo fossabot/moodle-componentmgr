@@ -9,6 +9,7 @@
  */
 
 use ComponentManager\DependencyInjection\ConsoleCommandsPass;
+use Composer\CaBundle\CaBundle;
 use Symfony\Bundle\MonologBundle\DependencyInjection\Compiler\LoggerChannelPass;
 use Symfony\Bundle\MonologBundle\DependencyInjection\MonologExtension;
 use Symfony\Component\Config\FileLocator;
@@ -23,6 +24,9 @@ ini_set('error_reporting', E_ALL);
 if (!ini_get('date.timezone')) {
     date_default_timezone_set(@date_default_timezone_get());
 }
+
+// Configure cURL's CA bundle
+ini_set('curl.cainfo', CaBundle::getSystemCaRootBundlePath());
 
 $container = new ContainerBuilder();
 $container->addCompilerPass(new ConsoleCommandsPass());
